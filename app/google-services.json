@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "176549314388",
+    "firebase_url": "https://adaptere-842cd-default-rtdb.firebaseio.com",
+    "project_id": "adaptere-842cd",
+    "storage_bucket": "adaptere-842cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176549314388:android:7e4b14e056c50d35ef52c1",
+        "android_client_info": {
+          "package_name": "com.example.adapter2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "176549314388-2kb8htvvdjicr7a1bd2cgftkkm1pv3hk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrm5LifPFBjmt1HDCs3mD7-pVpmHgERDs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176549314388-2kb8htvvdjicr7a1bd2cgftkkm1pv3hk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
