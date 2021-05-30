@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.solver.state.State;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -21,15 +20,22 @@ import java.util.List;
 
 public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> implements Filterable {
 
+    private final OnResClickListener onClickListener;
+
+    interface OnResClickListener{
+        void onResClick(ResModel res);
+    }
+
     private List<ResModel> list;
     private List<ResModel> listSearch;
     private Intent intent;
     private final Context parent;
 
-    public ResAdapter(List<ResModel> list, Context parent) {
+    public ResAdapter(List<ResModel> list, Context parent, OnResClickListener onClickListener) {
         this.list = list;
         listSearch = new ArrayList<>(list);
         this.parent = parent;
+        this.onClickListener = onClickListener;
     }
     
 
@@ -37,6 +43,7 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> i
     @Override
     public ResViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ResViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_res, parent, false));
+
     }
 
     @Override
@@ -47,6 +54,17 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> i
         holder.textDes.setText(res.des);
         holder.textName.setText(res.name);
         Picasso.get().load(res.getImageId()).into(holder.imagePreview);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                intent = new Intent(parent, Timer.class);
+                parent.startActivity(intent);
+
+                onClickListener.onResClick(res);
+            }
+        });
     }
 
 
@@ -56,8 +74,7 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> i
         return list.size();
     }
 
-
-            public class ResViewHolder extends RecyclerView.ViewHolder {
+public class ResViewHolder extends RecyclerView.ViewHolder {
 
         TextView textName, textDes;
         ImageView imagePreview;
@@ -69,11 +86,6 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> i
             textDes = itemView.findViewById(R.id.txtDes);
             imagePreview = itemView.findViewById(R.id.imagePreview);
             
-            imagePreview.setOnClickListener(v -> {
-                intent = new Intent(parent, Timer.class);
-                parent.startActivity(intent);
-
-            });
         }
 
     }

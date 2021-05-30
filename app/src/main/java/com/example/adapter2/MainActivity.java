@@ -1,11 +1,14 @@
 package com.example.adapter2;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private List<ResModel> result;
     private ResAdapter adapter;
     private DatabaseReference reference;
+    private Intent intent;
+    private Context parent;
+
+
 
 
     @Override
@@ -46,7 +53,13 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager lin = new LinearLayoutManager(this);
         lin.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(lin);
-        adapter = new ResAdapter(result, this);
+        adapter = new ResAdapter(result, this, new ResAdapter.OnResClickListener() {
+            @Override
+            public void onResClick(ResModel res) {
+                Toast.makeText(getApplicationContext(), "Был выбран ресторан " + res.getName(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         updateList();
