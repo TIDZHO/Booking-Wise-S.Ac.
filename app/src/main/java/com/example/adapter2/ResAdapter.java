@@ -11,15 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.solver.state.State;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-import static androidx.core.content.ContextCompat.startActivity;
 
 public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> implements Filterable {
 
@@ -33,7 +31,6 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> i
         listSearch = new ArrayList<>(list);
         this.parent = parent;
     }
-    
     
 
     @NonNull
@@ -51,6 +48,8 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> i
         holder.textName.setText(res.name);
         Picasso.get().load(res.getImageId()).into(holder.imagePreview);
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -70,13 +69,10 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> i
             textDes = itemView.findViewById(R.id.txtDes);
             imagePreview = itemView.findViewById(R.id.imagePreview);
             
-            imagePreview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    intent = new Intent(parent, Timer.class);
-                    parent.startActivity(intent);
+            imagePreview.setOnClickListener(v -> {
+                intent = new Intent(parent, Timer.class);
+                parent.startActivity(intent);
 
-                }
             });
         }
 
