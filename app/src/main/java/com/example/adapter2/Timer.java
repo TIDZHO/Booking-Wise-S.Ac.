@@ -2,47 +2,54 @@ package com.example.adapter2;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.Calendar;
 
 public class Timer extends AppCompatActivity {
 
     private TextView textViewTime;
     private TimePicker timePicker;
-    float dtTime;
+    DatePicker dt;
     ImageView btn1;
     Button timeButton;
     private boolean is24HView = true;
+    public static EditText kol;
 
 
     public static String timer;
     String getTimer(){return timer;}
+    public static String calendar1;
+    String getCalendar(){return calendar1;}
+    EditText getKol(){return kol;}
 
 
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
         timePicker = findViewById(R.id.timePicker);
         timePicker.setIs24HourView(true);
-
+        kol = (EditText) findViewById(R.id.people);
+        dt = (DatePicker) findViewById(R.id.datePicker);
         this.textViewTime = (TextView) this.findViewById(R.id.textView3);
         this.timePicker = (TimePicker) this.findViewById(R.id.timePicker);
         this.timePicker.setIs24HourView(this.is24HView);
         btn1 = findViewById(R.id.btn1);
+        kol.getText().toString();
+
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,15 +57,27 @@ public class Timer extends AppCompatActivity {
 
                 Intent intent = new Intent(Timer.this, Done.class);
                 startActivity(intent);finish();
-
-
             }
         });
 
         Timer();
+        Date();
 
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void Date() {
+        this.dt.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int month, int day) {
+                day = dt.getDayOfMonth();
+                month = dt.getMonth();
+                year =  dt.getYear();
 
+                calendar1 = String.valueOf(day + " " + month + " " + year);
+                System.out.println(calendar1);
+            }
+        });
 
     }
 
@@ -76,9 +95,6 @@ public class Timer extends AppCompatActivity {
 
             }
         });
-
-
     }
-
 
 }

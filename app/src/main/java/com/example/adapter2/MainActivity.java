@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -23,7 +24,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import static com.example.adapter2.Timer.kol;
 
 public class MainActivity extends AppCompatActivity {
     private List<ResModel> result;
@@ -32,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private Context parent;
 
+    public static String res;
+    public static Calendar calendar1;
+
 
 
 
@@ -39,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Timer qq = new Timer();
-//        qq.getTimer();
+        Timer timer = new Timer();
+        timer.getTimer();
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -53,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager lin = new LinearLayoutManager(this);
         lin.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(lin);
+
         adapter = new ResAdapter(result, this, new ResAdapter.OnResClickListener() {
             @Override
             public void onResClick(ResModel res) {
@@ -64,13 +72,16 @@ public class MainActivity extends AppCompatActivity {
 
         updateList();
 
-
+        ArrayList<String> info = new ArrayList<String>();
+        info.add(res);
+        info.add(String.valueOf(timer));
+        info.add(String.valueOf(calendar1));
+        info.add(String.valueOf(kol));
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -79,19 +90,16 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 2; i++) {
             result.add(new ResModel("name", "des", "key", "da"));
         }
-
     }
 
     private void updateList() {
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
                 ResModel model = snapshot.getValue(ResModel.class);
                 model.setKey(snapshot.getKey());
                 result.add(snapshot.getValue(ResModel.class));
                 adapter.notifyDataSetChanged();
-
             }
 
             @Override
@@ -115,20 +123,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
 
     private int getItemIndex(ResModel model) {
-
         int index = -1;
-
         for (int i = 0; i < result.size(); i++) {
             if (result.get(i).key.equals(model.key))
                 index = i;

@@ -43,7 +43,6 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> i
     @Override
     public ResViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ResViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_res, parent, false));
-
     }
 
     @Override
@@ -61,7 +60,6 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> i
             {
                 intent = new Intent(parent, Timer.class);
                 parent.startActivity(intent);
-
                 onClickListener.onResClick(res);
             }
         });
@@ -81,13 +79,10 @@ public class ResViewHolder extends RecyclerView.ViewHolder {
 
         public ResViewHolder(@NonNull View itemView) {
             super(itemView);
-
             textName = itemView.findViewById(R.id.txt_name);
             textDes = itemView.findViewById(R.id.txtDes);
             imagePreview = itemView.findViewById(R.id.imagePreview);
-            
         }
-
     }
 
     @Override
@@ -112,7 +107,6 @@ public class ResViewHolder extends RecyclerView.ViewHolder {
             }
             FilterResults results = new FilterResults();
             results.values = filteredlist;
-
             return results;
         }
 
