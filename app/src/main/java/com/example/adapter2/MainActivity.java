@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         reference = database.getReference("res");
-//        reference.setValue(qq);
+//        reference.setValue(timer);
         result = new ArrayList<>();
 
         RecyclerView recyclerView = findViewById(R.id.rv);
